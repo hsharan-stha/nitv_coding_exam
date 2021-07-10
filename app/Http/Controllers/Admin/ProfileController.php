@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Requests\ProfileStore;
 use App\Models\Profile;
 use App\Repositories\Profile\ProfileRepositoryInterface;
 use App\Services\Profile\ProfileServiceInterface;
@@ -29,7 +30,8 @@ class ProfileController extends ApiBaseController
      */
     public function index()
     {
-        echo "test";
+        $profile = $this->profileRepository->allWithRelation(['qualification_index'])->all();
+        return $this->respondWithMessage('Retrieved Successfully', $profile);
     }
 
     /**
@@ -48,7 +50,7 @@ class ProfileController extends ApiBaseController
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ProfileStore $request)
     {
         $profile = $this->profileService->create($request);
         return $this->respondWithMessage('Created Successfully', $profile);
@@ -83,7 +85,7 @@ class ProfileController extends ApiBaseController
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Profile $profile)
+    public function update(ProfileStore $request, Profile $profile)
     {
         $profile = $this->profileService->update($request, $profile->id);
         return $this->respondWithMessage('Updated Successfully', $profile);

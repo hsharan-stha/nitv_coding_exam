@@ -51,14 +51,4 @@ interface BaseServiceInterface
      */
     public function delete($id, string $primaryKey = 'id');
 
-    /**
-     * Returns a success redirect with success message
-     *
-     * @param string $operationType
-     * @param string $route
-     * @param bool $success
-     * @param string $msg
-     * @return mixed
-     */
-    public function redirectWithResponse(string $operationType, string $route, bool $success = true, string $msg = null);
 }
