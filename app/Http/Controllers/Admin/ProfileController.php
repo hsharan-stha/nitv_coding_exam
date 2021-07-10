@@ -52,6 +52,9 @@ class ProfileController extends ApiBaseController
      */
     public function store(ProfileStore $request)
     {
+        // from angular tom amange image with qualification array in formdata
+        $request['qualification'] = json_decode($request->qualification);
+
         $profile = $this->profileService->create($request);
         return $this->respondWithMessage('Created Successfully', $profile);
     }
@@ -87,6 +90,8 @@ class ProfileController extends ApiBaseController
      */
     public function update(ProfileStore $request, Profile $profile)
     {
+        $request['qualification'] = json_decode($request->qualification);
+
         $profile = $this->profileService->update($request, $profile->id);
         return $this->respondWithMessage('Updated Successfully', $profile);
     }

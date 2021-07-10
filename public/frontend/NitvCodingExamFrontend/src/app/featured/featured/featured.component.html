@@ -1,0 +1,96 @@
+<div style="float:left">
+  <h5>Profile Details</h5>
+  <table border="1">
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Gender</th>
+      <th>Image</th>
+      <th>Nationality</th>
+      <th>Education Qualification</th>
+      <th>Action</th>
+    </tr>
+
+    <tr *ngFor="let ap of allProfile">
+      <td>{{ap['name']}}</td>
+      <td>{{ap['email']}}</td>
+      <td>{{ap['gender']}}</td>
+      <td><img width="100" src="{{environment.API_URL.replace('api/','')+'images/'+ap['image']}}"></td>
+      <td>{{ap['nationality']}}</td>
+      <td>
+        <ul *ngFor="let q of ap['qualification_index']">
+          <li>School name :  {{q['school_name']}}</li>
+          <li>Year From : {{q['from_year']}}</li>
+          <li>Year To : {{q['to_year']}}</li>
+          <li>Result :{{q['result']}}</li>
+        </ul>
+      </td>
+      <td>
+        <button (click)="delete(ap['id'])">delete</button>
+      </td>
+    </tr>
+  </table>
+</div>
+<div style="float:left">
+  <h5>Profile Form</h5>
+  <form class="sign-in-form" [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+
+    <div class="form-group custom-width">
+      <label for="name">{{"Name" }}</label>
+      <input type="text" id="name" class="form-control" required formControlName="name"/>
+    </div>
+
+    <div class="form-group custom-width">
+      <label for="image">{{ "Image" }}</label>
+      <input type="file" id="image" (change)="handleFileChange($event)" class="form-control" required/>
+    </div>
+
+    <div class="form-group custom-width">
+      <label for="gender">{{"Gender" }}</label>
+      <select id="gender" formControlName="gender">
+        <option value="male">Male</option>
+        <option value="female">Female</option>
+        <option value="other">Other</option>
+      </select>
+    </div>
+
+    <div class="form-group custom-width">
+      <label for="phone">{{"Phone" }}</label>
+      <input type="text" id="phone" class="form-control" required formControlName="phone"/>
+    </div>
+    <div class="form-group custom-width">
+      <label for="email">{{"Email" }}</label>
+      <input type="email" id="email" class="form-control" required formControlName="email"/>
+    </div>
+    <div class="form-group custom-width">
+      <label for="nationality">{{"Nationality" }}</label>
+      <input type="text" id="nationality" class="form-control" required formControlName="nationality"/>
+    </div>
+    <div class="form-group custom-width">
+      <label for="date_of_birth">{{"Date Of Birth" }}</label>
+      <input type="text" id="date_of_birth" class="form-control" required formControlName="date_of_birth"/>
+    </div>
+    <div class="form-group custom-width">
+      <label for="mode_of_contact">{{"Mode Of Contact" }}</label>
+      <select id="mode_of_contact" formControlName="mode_of_contact">
+        <option value="male">Email</option>
+        <option value="female">Phone</option>
+        <option value="other">none</option>
+      </select>
+    </div>
+    <hr/>
+    <button type="button" (click)="addItem()">Add Item</button>
+    <div formArrayName="qualification"
+         *ngFor="let item of profileForm.get('qualification')['controls']; let i = index;">
+      <div [formGroupName]="i">
+        <input formControlName="school_name" placeholder="School Name">
+        <input formControlName="from_year" placeholder="From Year">
+        <input formControlName="to_year" placeholder="To Year">
+        <input formControlName="result" placeholder="Result">
+      </div>
+    </div>
+    <div class="form-group custom-width">
+      <button type="submit" class="sign-in-btn">{{ "submit"  }}</button>
+    </div>
+  </form>
+</div>
