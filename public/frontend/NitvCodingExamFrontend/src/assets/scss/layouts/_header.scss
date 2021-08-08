@@ -1,0 +1,70 @@
+$header-bg: white;
+.header {
+  background-color: map-get($header, bgColor);
+  padding: 0.75rem 1rem;
+
+  @include media-breakpoint-up(md) {
+    padding: 1rem;
+  }
+
+  .toggler {
+    color: white;
+    margin-right: 1rem;
+    cursor: pointer;
+  }
+
+  .auth {
+    display: flex;
+    align-items: center;
+
+    @include media-breakpoint-down(md) {
+      padding-right: 0;
+    }
+
+    h6 {
+      margin-left: 0.5rem;
+      color: map-get($header, userColor);
+      @include des;
+      font-weight: 400;
+      @include media-breakpoint-down(sm) {
+        display: none;
+      }
+    }
+
+    i,
+    svg {
+      color: $white;
+      font-size: 0.5rem;
+    }
+
+    .avatar {
+      &-sm {
+        img {
+          vertical-align: top;
+        }
+      }
+    }
+  }
+  &-icon {
+    &.btn {
+      [class^="ic-"],
+      [class*=" ic-"] {
+        color: white;
+        @include h6;
+      }
+    }
+  }
+}
+.logo {
+  max-height: map-get($header, logoSize);
+}
+
+.toggled {
+  header {
+    @include media-breakpoint-up(md) {
+      padding-left: 1rem;
+    }
+
+    transition: 0.25s padding-left $time-func-1;
+  }
+}

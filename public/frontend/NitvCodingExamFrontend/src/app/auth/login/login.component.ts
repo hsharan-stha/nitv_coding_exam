@@ -2,19 +2,21 @@ import {Component, OnInit} from '@angular/core';
 import {AuthService} from "../auth.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
+import {AppController} from "../../app.controller";
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent extends AppController implements OnInit {
 
   loginForm: FormGroup;
 
   constructor(public loginService: AuthService,
               private router: Router,
               public formBuilder: FormBuilder) {
+    super();
   }
 
   ngOnInit(): void {

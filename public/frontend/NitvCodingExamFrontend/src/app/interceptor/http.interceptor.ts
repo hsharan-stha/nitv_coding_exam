@@ -1,6 +1,8 @@
 import {Injectable} from '@angular/core';
 import {HttpRequest, HttpHandler, HttpEvent,} from '@angular/common/http';
 import {Observable} from 'rxjs';
+import {NgxSpinnerService} from "ngx-spinner";
+import {finalize} from "rxjs/operators";
 
 
 @Injectable({
@@ -14,7 +16,10 @@ export class HttpInterceptorService {
   private token: string;
 
 
-  constructor() {
+  pendingRequestsCount = 0;
+
+
+  constructor(private spinner: NgxSpinnerService) {
   }
 
 
@@ -35,8 +40,15 @@ export class HttpInterceptorService {
       }
     });
 
+    // Show Spinner
+    this.pendingRequestsCount++;
+    this.spinner.show();
 
-    return next.handle(req).pipe();
-
+    return next.handle(req).pipe(finalize(() => {
+      this.pendingRequestsCount--;
+      if (this.pendingRequestsCount < 1) {
+        this.spinner.hide();
+      }
+    }));
   }
 }

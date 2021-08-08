@@ -7,6 +7,7 @@ use App\Models\Profile;
 use App\Repositories\Profile\ProfileRepositoryInterface;
 use App\Services\Profile\ProfileServiceInterface;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ProfileController extends ApiBaseController
 {
@@ -28,9 +29,17 @@ class ProfileController extends ApiBaseController
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $profile = $this->profileRepository->allWithRelation(['qualification_index'])->all();
+//        DB::enableQueryLog();
+//        dd($request->get('value'));
+        if ($request->get('value')) {
+            $profile = Profile::where('email', 'like', '%' . $request->get('value') . '%')->get();
+//            $profile = $this->profileRepository->whereWithRelation(['email'=> '%' . $request->get('value') . '%'], ['qualification_index']);
+//            dd(DB::getQueryLog());
+        } else {
+            $profile = $this->profileRepository->allWithRelation(['qualification_index'])->all();
+        }
         return $this->respondWithMessage('Retrieved Successfully', $profile);
     }
 
@@ -52,8 +61,6 @@ class ProfileController extends ApiBaseController
      */
     public function store(ProfileStore $request)
     {
-        // from angular tom amange image with qualification array in formdata
-        $request['qualification'] = json_decode($request->qualification);
 
         $profile = $this->profileService->create($request);
         return $this->respondWithMessage('Created Successfully', $profile);
@@ -65,9 +72,10 @@ class ProfileController extends ApiBaseController
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Profile $profile)
     {
-        //
+        $profile->qualification_index;
+        return $this->respondWithMessage('Retrieved Successfully', $profile);
     }
 
     /**
@@ -90,8 +98,6 @@ class ProfileController extends ApiBaseController
      */
     public function update(ProfileStore $request, Profile $profile)
     {
-        $request['qualification'] = json_decode($request->qualification);
-
         $profile = $this->profileService->update($request, $profile->id);
         return $this->respondWithMessage('Updated Successfully', $profile);
     }

@@ -2,13 +2,15 @@ import {Component, OnInit} from '@angular/core';
 import {FeaturedService} from "./featured.service";
 import {environment} from "../../../environments/environment";
 import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {AppController} from "../../app.controller";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-featured',
   templateUrl: './featured.component.html',
   styleUrls: ['./featured.component.scss']
 })
-export class FeaturedComponent implements OnInit {
+export class FeaturedComponent extends AppController implements OnInit {
 
   public environment = environment;
   public allProfile = [];
@@ -16,7 +18,8 @@ export class FeaturedComponent implements OnInit {
   public educationQualification: FormArray;
 
 
-  constructor(private service: FeaturedService, public formBuilder: FormBuilder) {
+  constructor(private service: FeaturedService, private formBuilder: FormBuilder, private router: Router) {
+    super();
   }
 
   ngOnInit(): void {
@@ -44,18 +47,43 @@ export class FeaturedComponent implements OnInit {
     this.educationQualification.push(this.createItem());
   }
 
+  removeItem(index: number) {
+    (this.profileForm.get('qualification') as FormArray).removeAt(index);
+  }
+
   createItem(): FormGroup {
     return this.formBuilder.group({
       school_name: '',
       from_year: '',
       to_year: '',
       result: '',
+      id: '',
+      profile_id: '',
+      created_at: '',
+      updated_at: ''
     });
   }
 
   delete(id): void {
     this.service.delete(id).subscribe(data => {
       this.getAll();
+    })
+  }
+
+  edit(id): void {
+    this.service.edit(id).subscribe(data => {
+      this.profileForm.patchValue(data['data']);
+      this.profileForm.patchValue({image: ''});
+      data['data']['qualification_index'].forEach(d => {
+        this.educationQualification = this.profileForm.get('qualification') as FormArray;
+        this.educationQualification.push(this.formBuilder.group(d));
+      })
+    })
+  }
+
+  searchByEmail($event) {
+    this.service.searchByEmail($event.target.value).subscribe((data) => {
+      this.allProfile = data['data'];
     })
   }
 
@@ -88,10 +116,20 @@ export class FeaturedComponent implements OnInit {
 
   onSubmit(): void {
     console.log(this.profileForm.value);
-
+    if (this.profileForm.invalid) {
+      this.validateAllFormFields(this.profileForm);
+      this.displayInvalidFormControls(this.profileForm);
+      return;
+    }
     this.service.postData(this.profileForm.value).subscribe((data) => {
       console.log(data);
+      this.getAll();
     })
+  }
+
+  logout(): void {
+    localStorage.clear();
+    this.router.navigate(['/auth/']);
   }
 
 }

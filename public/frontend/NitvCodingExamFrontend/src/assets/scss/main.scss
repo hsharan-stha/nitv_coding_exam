@@ -1,0 +1,45 @@
+@import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800&display=swap");
+
+@import "abstracts/variables";
+@import "components/pqgrid/pqgrid-variables";
+
+@import "./frameworks/cbootstrap";
+@import "../icon.scss";
+
+@import "abstracts/mixins";
+@import "abstracts/functions";
+
+@import "base/base";
+@import "base/animations";
+@import "base/typography";
+@import "base/utilities";
+
+@import "layouts/welcome";
+@import "layouts/login";
+@import "layouts/shortcut";
+@import "layouts/dashboard";
+
+@import "layouts/sideoverlay";
+@import "layouts/header";
+@import "layouts/settings";
+@import "layouts/footer";
+
+@import "components/card";
+@import "components/list";
+@import "components/buttons";
+
+@import "components/table";
+@import "components/tabs";
+@import "components/form";
+@import "components/dropdown";
+@import "components/modal";
+@import "components/pagination";
+
+@import "components/scrollspy";
+@import "components/notification";
+@import "components/multiselect";
+@import "components/alertify";
+
+@import "layouts/sidebar";
+
+@import "components/pqgrid/pqgrid-table";

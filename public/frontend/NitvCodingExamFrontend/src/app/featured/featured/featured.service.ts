@@ -28,6 +28,14 @@ export class FeaturedService {
     return this.httpClient.delete(`${environment.API_URL}profile/${id}`);
   }
 
+  public edit(id: number) {
+    return this.httpClient.get(`${environment.API_URL}profile/${id}`);
+  }
+
+  public searchByEmail(value: string) {
+    return this.httpClient.get(`${environment.API_URL}profile?value=${value}`);
+  }
+
   public createFormData(
     object: Object,
     form?: FormData,

@@ -1,0 +1,319 @@
+.modal {
+  display: flex !important;
+  align-items: center;
+
+  &-xl {
+    max-width: map-get($modal, xl);
+  }
+
+  &-bms {
+    box-shadow: 0px 1px 2px #d8dde0;
+    border-radius: 0px 0px 4px 4px;
+    display: flex !important;
+    align-items: center;
+
+    .modal {
+      &-header {
+        align-items: center;
+        @each $label, $value in $information-color {
+          &-#{"" + $label} {
+            color: $value;
+            background-color: rgba($value, 0.16);
+            border-bottom: $blue-10;
+          }
+        }
+      }
+
+      &-scrollable {
+
+        height: 30rem;
+        @include scrollable;
+
+      }
+
+      &-title {
+        @include des;
+      }
+
+      &.label {
+        color: $cool-gray-700;
+      }
+
+      &-footer {
+        border: none;
+        // border-top: 1px solid $cool-gray-300;
+        padding: 0 1rem 1rem;
+      }
+    }
+  }
+
+  &-alert {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba($gray-800, 0.8);
+    z-index: 1111;
+
+    .card {
+      z-index: 11111;
+      position: fixed;
+      right: 0;
+      left: 0;
+      top: 25%;
+      max-width: 400px;
+      margin: auto;
+      background-color: $white;
+      text-align: center;
+
+      &-body {
+        padding: 2rem 1.5rem 1.5rem;
+
+        .alert {
+          &-title {
+            margin-top: 1.5rem;
+          }
+
+          &-desc {
+            color: $cool-gray-600;
+            margin: 0.5rem 0 1.5rem;
+          }
+        }
+      }
+    }
+  }
+
+  &-toast {
+    z-index: 10000;
+    width: 314px;
+    position: fixed;
+    bottom: 0%;
+    right: 1%;
+
+    animation-name: moveDown;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+
+    .modal-content {
+      border: none;
+      box-shadow: 0px 2px 4px $cool-gray-400;
+
+      .modal-body {
+        display: flex;
+        align-items: center;
+        padding: 0.5rem 1rem 0.75rem;
+
+        .toast-icon {
+          padding-right: 1rem;
+          font-size: 1.25rem;
+          color: white;
+        }
+
+        .toast-text {
+          flex-grow: 1;
+
+          h6 {
+            color: $white;
+            padding-bottom: 2px;
+            width: 100%;
+            @include h6;
+          }
+
+          p {
+            color: $white;
+            @include des;
+          }
+
+          i {
+            color: white;
+            @include small;
+            margin-right: -8px;
+          }
+        }
+      }
+    }
+
+    @each $name, $value in $state-color {
+      &.modal-toast-#{"" + $name} {
+        .modal {
+          &-content {
+            background-color: $value;
+          }
+        }
+      }
+    }
+
+    &.modal-toast-warning {
+      .modal {
+        &-body {
+          .toast-icon {
+            color: $black;
+          }
+
+          .toast-text {
+            h6,
+            p,
+            i {
+              color: $black;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  &-wide {
+    .modal {
+      margin: 1rem 0;
+
+      &-content {
+        height: calc(100vh - 4rem);
+        width: 915px;
+        @include media-breakpoint-down(lg) {
+          width: 800px;
+        }
+        @include media-breakpoint-down(md) {
+          width: 100%;
+        }
+      }
+
+      &-body {
+        overflow: hidden;
+      }
+    }
+  }
+
+  &--print {
+    .modal {
+      margin: 1rem 0;
+
+      &-content {
+        height: calc(100vh - 4rem);
+        margin: 2rem 0;
+        width: 915px;
+        @include media-breakpoint-down(lg) {
+          width: 800px;
+        }
+        @include media-breakpoint-down(md) {
+          width: 100%;
+        }
+      }
+
+      &-body {
+        @include scrollable;
+
+        &::-webkit-scrollbar {
+          width: 8px;
+          height: 8px;
+        }
+
+        /* Handle */
+        &::-webkit-scrollbar-thumb {
+          background: rgba($blue-500, 0.8);
+        }
+
+        /* Handle on hover */
+        &::-webkit-scrollbar-thumb:hover {
+          background: $blue-500;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+
+  &-open {
+    .modal {
+      overflow-y: hidden;
+    }
+  }
+
+  &-video {
+    video {
+      object-fit: cover;
+
+      &:focus {
+        outline: none;
+      }
+    }
+
+    .video-content {
+      padding: 1rem 1.5rem;
+
+      .title {
+        @include des;
+        margin: 0 0 0.25rem;
+        border: none;
+        padding: 0;
+        color: $cool-gray-700;
+      }
+
+      .desc {
+        color: $cool-gray-600;
+      }
+    }
+  }
+
+  &-notification {
+    p {
+      white-space: normal;
+    }
+  }
+}
+
+.alertify {
+  &-notifier {
+    .ajs {
+      &-message {
+        padding: 0 !important;
+        border-radius: 4px;
+
+        .msg {
+          background-color: $red;
+          padding: 0.75rem 1rem;
+          display: flex;
+          align-items: center;
+          justify-content: space-evenly;
+          border-radius: 4px;
+
+          .toast-icon {
+            padding-right: 1rem;
+            font-size: 1.25rem;
+            color: white;
+          }
+
+          .toast-text {
+            h6 {
+              color: $white;
+              padding-bottom: 2px;
+              width: 100%;
+              @include h6;
+            }
+
+            p {
+              color: $white;
+              @include des;
+            }
+
+            i {
+              color: white;
+              @include small;
+              // margin-right: -8px;
+            }
+          }
+        }
+      }
+
+      // &-error{
+      //   background-color: $red;
+
+      // }
+    }
+  }
+}
+
+// .alertify-notifier {
+//   .ajs-message.ajs-error {
+//     background-color: $green-50;
+//   }
+// }

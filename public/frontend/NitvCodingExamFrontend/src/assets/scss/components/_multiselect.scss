@@ -1,0 +1,313 @@
+angular2-multiselect {
+  min-width: 250px;
+  max-width: 250px;
+}
+
+.expTransactionWorkflowLeft {
+  .dropdown-list {
+    width: auto;
+  }
+
+  .cuppa-dropdown {
+    width: 200px;
+  }
+
+  .selected-list {
+    span {
+      &:first-child {
+        overflow: hidden;
+        padding-right: 16px;
+        text-overflow: ellipsis;
+      }
+    }
+  }
+}
+
+.cuppa-dropdown {
+  .selected {
+    &-list {
+      outline: none;
+
+      .c {
+        &-btn {
+          background: $white;
+          color: $input-placeholder-color;
+          border: 1px solid $cool-gray-400;
+          border-radius: 2px;
+          padding: 0.25rem 1rem 0.25rem 0.5rem;
+          outline: none;
+          min-height: $input-height;
+          height: $input-height;
+
+          .clear-all {
+            right: 20px;
+          }
+
+          .c-angle-down,
+          .c-angle-up {
+            right: 5px;
+          }
+        }
+
+        &-list {
+          display: flex;
+          align-items: center;
+          overflow-x: hidden;
+          @include scrollable;
+
+          &::-webkit-scrollbar {
+            width: 0.25rem;
+            height: 0.25rem;
+          }
+
+          &::-webkit-scrollbar-thumb {
+            background: rgba($blue, 0.8);
+            border-radius: 4px;
+          }
+
+          /* Handle on hover */
+          &::-webkit-scrollbar-thumb:hover {
+            background: $blue;
+            cursor: pointer;
+          }
+
+          .c-token {
+            padding: 0.125rem 0.25rem;
+            border-radius: 2px;
+            background: $cool-gray-200;
+            margin: 0;
+            margin-bottom: 0.125rem;
+
+            &:not(:last-child) {
+              margin-right: 0.75rem;
+            }
+
+            .c-remove {
+              background-color: $cool-gray-600;
+              border-radius: 50%;
+              height: 12px;
+              width: 12px;
+              right: 4px;
+
+              svg {
+                height: 5px;
+                width: 5px;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                fill: white;
+              }
+            }
+
+            .c-label {
+              @include small;
+              color: $cool-gray-700;
+              padding-right: 1rem;
+            }
+          }
+        }
+
+        &-remove,
+        &-angle-down,
+        &-angle-up {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+          svg {
+            width: 8px;
+            height: 8px;
+            fill: $cool-gray-700;
+          }
+        }
+      }
+    }
+  }
+
+  .dropdown-list {
+    box-shadow: 0px 4px 8px rgba($black, 0.1);
+    padding: 0;
+
+    .list-area {
+      border: none;
+      border-radius: 2px;
+
+      ul {
+        li {
+          padding: 0.5rem 0.75rem;
+          color: $cool-gray-600;
+          border-radius: 2px 2px 0 0;
+
+          @include hover {
+            background-color: $blue-600;
+
+            label {
+              color: $cool-gray-700;
+            }
+          }
+
+          &.selected-item {
+            background: $blue-10;
+
+            @include hover {
+              background-color: $blue-600;
+            }
+
+            label {
+              color: $cool-gray-700;
+            }
+          }
+        }
+      }
+
+      .select-all {
+        padding: 0.5rem 0.75rem;
+        border-bottom: 1px solid $cool-gray-400;
+      }
+
+      .list-filter {
+        @include des;
+        border-bottom: 1px solid #ccc;
+
+        .c-search {
+          top: 7px;
+
+          svg {
+            @include des;
+            fill: $gray-800;
+          }
+        }
+
+        .c-clear svg {
+          fill: $gray-800;
+        }
+      }
+    }
+  }
+}
+
+.arrow-up,
+.arrow-down {
+  border-bottom: 15px solid white;
+  display: none;
+}
+
+.arrow-2 {
+  border-bottom: 15px solid #ccc;
+}
+
+.pure-checkbox input[type="checkbox"]:focus + label:before,
+.pure-checkbox input[type="checkbox"]:hover + label:before {
+  border-color: $blue-500;
+  background-color: $blue-10;
+}
+
+.pure-checkbox input[type="checkbox"] + label {
+  color: $cool-gray-600;
+}
+
+.pure-checkbox input[type="checkbox"] + label:before {
+  color: $blue-500;
+  border: 1px solid $blue-500;
+}
+
+.pure-checkbox input[type="checkbox"] + label:after {
+  background-color: $blue-500;
+}
+
+.pure-checkbox input[type="checkbox"]:disabled + label:before {
+  border-color: #cccccc;
+}
+
+.pure-checkbox input[type="checkbox"]:disabled:checked + label:before {
+  background-color: #cccccc;
+}
+
+.pure-checkbox input[type="checkbox"] + label:after {
+  border-color: #ffffff;
+}
+
+.pure-checkbox input[type="radio"]:checked + label:before {
+  background-color: white;
+}
+
+.pure-checkbox input[type="checkbox"]:checked + label:before {
+  background: $blue-500;
+}
+
+.single-select-mode .pure-checkbox input[type="checkbox"]:focus + label:before,
+.single-select-mode .pure-checkbox input[type="checkbox"]:hover + label:before {
+  border-color: $blue-500;
+  background-color: #f2f2f2;
+}
+
+.single-select-mode .pure-checkbox input[type="checkbox"] + label {
+  color: #000;
+}
+
+.single-select-mode .pure-checkbox input[type="checkbox"] + label:before {
+  color: transparent !important;
+  border: 0px solid $blue-500;
+}
+
+.single-select-mode .pure-checkbox input[type="checkbox"] + label:after {
+  background-color: transparent !important;
+}
+
+.single-select-mode
+.pure-checkbox
+input[type="checkbox"]:disabled
++ label:before {
+  border-color: #cccccc;
+}
+
+.single-select-mode
+.pure-checkbox
+input[type="checkbox"]:disabled:checked
++ label:before {
+  background-color: #cccccc;
+}
+
+.single-select-mode .pure-checkbox input[type="checkbox"] + label:after {
+  border-color: $blue-500;
+}
+
+.single-select-mode .pure-checkbox input[type="radio"]:checked + label:before {
+  background-color: white;
+}
+
+.single-select-mode
+.pure-checkbox
+input[type="checkbox"]:checked
++ label:before {
+  background: none !important;
+}
+
+.btn-iceblue {
+  background: $blue-500;
+  border: 1px solid #ccc;
+  color: #fff;
+}
+
+.custom-multiselect {
+  width: 100%;
+  max-width: 100%;
+  position: relative;
+
+  .dropdown-list {
+    left: unset !important;
+  }
+}
+
+.expTransactionWorkflow .cuppa-dropdown {
+  max-width: 380px;
+
+  div > .lazyContainer {
+    max-height: 245px;
+  }
+
+  //.dropdown-list {
+  //  top: 74.066px !important;
+  //}
+}

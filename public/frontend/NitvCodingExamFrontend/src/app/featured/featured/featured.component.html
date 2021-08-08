@@ -1,96 +1,189 @@
-<div style="float:left">
-  <h5>Profile Details</h5>
-  <table border="1">
-    <tr>
-      <th>Name</th>
-      <th>Email</th>
-      <th>Gender</th>
-      <th>Image</th>
-      <th>Nationality</th>
-      <th>Education Qualification</th>
-      <th>Action</th>
-    </tr>
-
-    <tr *ngFor="let ap of allProfile">
-      <td>{{ap['name']}}</td>
-      <td>{{ap['email']}}</td>
-      <td>{{ap['gender']}}</td>
-      <td><img width="100" src="{{environment.API_URL.replace('api/','')+'images/'+ap['image']}}"></td>
-      <td>{{ap['nationality']}}</td>
-      <td>
-        <ul *ngFor="let q of ap['qualification_index']">
-          <li>School name :  {{q['school_name']}}</li>
-          <li>Year From : {{q['from_year']}}</li>
-          <li>Year To : {{q['to_year']}}</li>
-          <li>Result :{{q['result']}}</li>
-        </ul>
-      </td>
-      <td>
-        <button (click)="delete(ap['id'])">delete</button>
-      </td>
-    </tr>
-  </table>
-</div>
-<div style="float:left">
-  <h5>Profile Form</h5>
-  <form class="sign-in-form" [formGroup]="profileForm" (ngSubmit)="onSubmit()">
-
-    <div class="form-group custom-width">
-      <label for="name">{{"Name" }}</label>
-      <input type="text" id="name" class="form-control" required formControlName="name"/>
+<header class="header">
+  <div class="d-flex justify-content-between align-items-center">
+    <div class="d-flex align-items-center">
     </div>
 
-    <div class="form-group custom-width">
-      <label for="image">{{ "Image" }}</label>
-      <input type="file" id="image" (change)="handleFileChange($event)" class="form-control" required/>
-    </div>
-
-    <div class="form-group custom-width">
-      <label for="gender">{{"Gender" }}</label>
-      <select id="gender" formControlName="gender">
-        <option value="male">Male</option>
-        <option value="female">Female</option>
-        <option value="other">Other</option>
-      </select>
-    </div>
-
-    <div class="form-group custom-width">
-      <label for="phone">{{"Phone" }}</label>
-      <input type="text" id="phone" class="form-control" required formControlName="phone"/>
-    </div>
-    <div class="form-group custom-width">
-      <label for="email">{{"Email" }}</label>
-      <input type="email" id="email" class="form-control" required formControlName="email"/>
-    </div>
-    <div class="form-group custom-width">
-      <label for="nationality">{{"Nationality" }}</label>
-      <input type="text" id="nationality" class="form-control" required formControlName="nationality"/>
-    </div>
-    <div class="form-group custom-width">
-      <label for="date_of_birth">{{"Date Of Birth" }}</label>
-      <input type="text" id="date_of_birth" class="form-control" required formControlName="date_of_birth"/>
-    </div>
-    <div class="form-group custom-width">
-      <label for="mode_of_contact">{{"Mode Of Contact" }}</label>
-      <select id="mode_of_contact" formControlName="mode_of_contact">
-        <option value="male">Email</option>
-        <option value="female">Phone</option>
-        <option value="other">none</option>
-      </select>
-    </div>
-    <hr/>
-    <button type="button" (click)="addItem()">Add Item</button>
-    <div formArrayName="qualification"
-         *ngFor="let item of profileForm.get('qualification')['controls']; let i = index;">
-      <div [formGroupName]="i">
-        <input formControlName="school_name" placeholder="School Name">
-        <input formControlName="from_year" placeholder="From Year">
-        <input formControlName="to_year" placeholder="To Year">
-        <input formControlName="result" placeholder="Result">
+    <div class="list list__inline">
+      <div class="ml-2">
+        <a href="javascript:void(0)" (click)="logout()" class="auth" role="button"
+           aria-haspopup="true" aria-expanded="false">
+          <div class="textbox mr-2">
+            <h6>Logout </h6>
+          </div>
+        </a>
       </div>
+
     </div>
-    <div class="form-group custom-width">
-      <button type="submit" class="sign-in-btn">{{ "submit"  }}</button>
+  </div>
+</header>
+
+
+<div class="inner">
+  <div class="container">
+    <h4 class="heading">Profile Section</h4>
+    <input type="text" (change)="searchByEmail($event)" class="form-control col-lg-4" placeholder="search by email">
+    <div class="row">
+      <div class="col-lg-9">
+        <div class="card card-100 overflow-auto  ">
+
+          <div class="card-body table-responsive">
+            <h5>Profile Details</h5>
+            <table class="table table-bordered table-striped">
+              <tr>
+                <th>Action</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Gender</th>
+                <th>Image</th>
+                <th>Nationality</th>
+                <th>Education Qualification</th>
+              </tr>
+
+              <tr *ngFor="let ap of allProfile">
+                <td>
+                  <button (click)="edit(ap['id'])" class="btn btn-primary">edit</button>
+                  <button (click)="delete(ap['id'])" class="btn btn-danger">delete</button>
+                </td>
+                <td>{{ap['name']}}</td>
+                <td>{{ap['email']}}</td>
+                <td>{{ap['gender']}}</td>
+                <td><img width="100" src="{{environment.API_URL.replace('api/','')+'images/'+ap['image']}}"></td>
+                <td>{{ap['nationality']}}</td>
+                <td>
+                  <table class="table table-bordered" *ngFor="let q of ap['qualification_index']">
+                    <tr>
+                      <th>School Name</th>
+                      <th>From</th>
+                      <th>To</th>
+                      <th>Result</th>
+                    </tr>
+                    <tr>
+                      <td>{{q['school_name']}}</td>
+                      <td>{{q['from_year']}}</td>
+                      <td>{{q['to_year']}}</td>
+                      <td>{{q['result']}}</td>
+                    </tr>
+                  </table>
+                </td>
+
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3">
+        <div class="card card-100 overflow-auto  ">
+
+          <div class="card-body scrollable">
+            <h5>Profile Form</h5>
+            <form class="sign-in-form" [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+
+              <div class="form-group custom-width">
+                <label for="name">{{"Name" }}</label>
+                <input type="text" id="name" class="form-control" required formControlName="name"/>
+                <span class="error" *ngIf="checkFormControlInvalid('name', profileForm)">
+                <i class="ic-error"> </i>
+                Name is required
+                </span>
+              </div>
+
+              <!--              <img *ngIf="profileForm.get('image').value" width="100"-->
+              <!--                   src="{{environment.API_URL.replace('api/','')+'images/'+profileForm.get('image').value}}">-->
+
+              <div class="form-group custom-width">
+                <label for="image">{{ "Image" }}</label>
+                <input type="file" id="image" (change)="handleFileChange($event)" class="form-control-file" required/>
+                <span class="error" *ngIf="checkFormControlInvalid('image', profileForm)">
+                <i class="ic-error"> </i>
+                Image is required
+                </span>
+              </div>
+
+              <div class="form-group custom-width">
+                <label for="gender">{{"Gender" }}</label>
+                <select id="gender" formControlName="gender" class="form-control">
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                  <option value="other">Other</option>
+                </select>
+                <span class="error" *ngIf="checkFormControlInvalid('gender', profileForm)">
+                <i class="ic-error"> </i>
+                Gender is required
+                </span>
+              </div>
+
+              <div class="form-group custom-width">
+                <label for="phone">{{"Phone" }}</label>
+                <input type="text" id="phone" class="form-control" required formControlName="phone"/>
+                <span class="error" *ngIf="checkFormControlInvalid('phone', profileForm)">
+                <i class="ic-error"> </i>
+                Phone is required
+                </span>
+              </div>
+              <div class="form-group custom-width">
+                <label for="email">{{"Email" }}</label>
+                <input type="email" id="email" class="form-control" required formControlName="email"/>
+                <span class="error" *ngIf="checkFormControlInvalid('email', profileForm)">
+                <i class="ic-error"> </i>
+                Email is required
+                </span>
+              </div>
+              <div class="form-group custom-width">
+                <label for="nationality">{{"Nationality" }}</label>
+                <input type="text" id="nationality" class="form-control" required formControlName="nationality"/>
+                <span class="error" *ngIf="checkFormControlInvalid('nationality', profileForm)">
+                <i class="ic-error"> </i>
+                Nationality is required
+                </span>
+              </div>
+              <div class="form-group custom-width">
+                <label for="date_of_birth">{{"Date Of Birth" }}</label>
+                <input type="date" id="date_of_birth" class="form-control" required formControlName="date_of_birth"/>
+                <span class="error" *ngIf="checkFormControlInvalid('date_of_birth', profileForm)">
+                <i class="ic-error"> </i>
+                DOB is required
+                </span>
+              </div>
+              <div class="form-group custom-width">
+                <label for="mode_of_contact">{{"Mode Of Contact" }}</label>
+                <select id="mode_of_contact" class="form-control" formControlName="mode_of_contact">
+                  <option value="male">Email</option>
+                  <option value="female">Phone</option>
+                  <option value="other">none</option>
+                </select>
+                <span class="error" *ngIf="checkFormControlInvalid('mode_of_contact', profileForm)">
+                <i class="ic-error"> </i>
+                Contact mode is required
+                </span>
+              </div>
+              <hr/>
+              <button type="button" (click)="addItem()" class="btn btn-secondary">Add Item</button>
+              <div formArrayName="qualification"
+                   *ngFor="let item of profileForm.get('qualification')['controls']; let i = index;">
+                <div [formGroupName]="i">
+
+                  <h6 class="heading">Educational Qualification ({{i + 1}})
+                    <a type="button" (click)="removeItem(i)" class="btn btn-danger">remove</a>
+                  </h6>
+                  <input type="text" class="form-control mb-2" formControlName="school_name" placeholder="School Name"
+                         required="required">
+                  <input type="date" class="form-control mb-2" formControlName="from_year" placeholder="From Year"
+                         required="required">
+                  <input type="date" class="form-control mb-2" formControlName="to_year" placeholder="To Year"
+                         required="required">
+                  <input type="text" class="form-control mb-2" formControlName="result" placeholder="Result"
+                         required="required">
+
+                </div>
+              </div>
+              <div class="form-group custom-width mt-3">
+                <button type="submit" class="btn btn-primary sign-in-btn">{{ "submit"  }}</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
     </div>
-  </form>
+  </div>
 </div>

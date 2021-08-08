@@ -45,9 +45,16 @@ class ProfileService extends BaseService implements ProfileServiceInterface
             $profile = $this->model->create($data);
 
             // store in education qualification table
-            foreach ($request['qualification'] as $q) {
-                $q['profile_id'] = $profile->id;
-                $this->model->qualification_create()->create($q);
+            foreach (json_decode($request['qualification']) as $q) {
+                $arr = array(
+                    "profile_id" => $profile->id,
+                    "school_name" => $q->school_name,
+                    "from_year" => $q->from_year,
+                    "from_year" => $q->from_year,
+                    "to_year" => $q->to_year,
+                    "result" => $q->result,
+                );
+                $this->model->qualification_create()->create($arr);
             }
 
             // CSV start
@@ -115,9 +122,16 @@ class ProfileService extends BaseService implements ProfileServiceInterface
 
 
             // update in education qualification table
-            foreach ($request['qualification'] as $q) {
-                $q['profile_id'] = $id;
-                $this->model->qualification_create()->create($q);
+            foreach (json_decode($request['qualification']) as $q) {
+                $arr = array(
+                    "profile_id" => $id,
+                    "school_name" => $q->school_name,
+                    "from_year" => $q->from_year,
+                    "from_year" => $q->from_year,
+                    "to_year" => $q->to_year,
+                    "result" => $q->result,
+                );
+                $this->model->qualification_create()->create($arr);
             }
             DB::commit();
 

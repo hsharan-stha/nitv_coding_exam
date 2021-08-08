@@ -1,0 +1,14 @@
+:root{
+    --sideoverlay-width:360px;
+}
+.sideoverlay{
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: var(--sideoverlay-width);
+    background-color: white;
+    z-index: 1050;
+
+    
+}
